@@ -1,0 +1,41 @@
+#!/bin/bash
+echo "script to Update the kernel and utilities to latest Versions"
+echo "    -B - also update the ~/.bashrc with some useful constants"
+
+# A POSIX variable
+OPTIND=1         # Reset in case getopts has been used previously in the shell.
+
+# Initialize our own variables:
+bash=0
+
+while getopts "v:B" opt; do
+    case "$opt" in
+    B)  bash=1
+        ;;
+    esac
+done
+
+shift $((OPTIND-1))
+
+[ "$1" = "--" ] && shift
+
+echo "bash=$bash, Leftovers: $@"
+
+if [ $bash = 1 ]; then
+	echo "adding handy settings into ~/.bashrc"
+	sudo sed -i '$a export ARCH=arm64' ~/.bashrc
+	sudo sed -i '$a export MONITOR_PORT=/dev/tty96B0' ~/.bashrc
+	sudo sed -i '$a export PATH=~/bin:$PATH' ~/.bashrc
+	sudo sed -i '$a export JAVA_TOOL_OPTIONS="-Dgnu.io.rxtx.SerialPorts=/dev/tty96B0"' ~/.bashrc
+	sudo sed -i '$a export _JAVA_OPTIONS="-Djava.library.path=/home/linaro/.minecraft/natives/"' ~/.bashrc
+	sudo sed -i '$a export PYTHONPATH=/usr/local/lib/python3.7/dist-packages:/usr/local/lib/python2.7/site-packages' ~/.bashrc
+#	sudo sed -i '$a xset s off\n' ~/.bashrc
+
+fi
+
+echo "Updating system to latest versions (apt-get update, upgrade, dist-upgrade)"
+sudo apt-get update
+sudo apt-get upgrade -y
+sudo apt-get dist-upgrade -u -y
+sudo apt-get clean
+sudo apt-get autoremove -y

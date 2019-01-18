@@ -1,0 +1,78 @@
+#!/bin/sh
+echo "script to enable one of the cameras in the device tree"
+echo "-1 - single camera (default)"
+echo "-2 - dual cameras"
+echo "-A - AiStarVision Cameras (OV5645)"
+echo "-D - D3 Engineering Cameras (OV5640 - Leopard Imaging module)"
+echo "-S - spidev, user space access to SPI devices"
+
+# A POSIX variable
+OPTIND=1         # Reset in case getopts has been used previously in the shell.
+
+# Initialize our own variables:
+output_file=""
+verbose=0
+dual=0
+camera=0
+usb_acm=0
+spidev=0
+
+if [ ! -d dt-update ]; then
+	git clone https://github.com/96boards/dt-update.git
+	cd dt-update/
+	make 
+	cd ..
+fi
+if [ ! -f /bin/dbootimg ]; then
+	cd dt-update/
+	sudo make install
+	cd ..
+fi
+
+while getopts "v:2ADSU" opt; do
+    case "$opt" in
+    v)  verbose=1
+        ;;
+    2) dual=1
+	;;
+    A) camera=1	#AiStarVision
+	;;
+    D) camera=2	#D3Engineering
+	;;
+    S) spidev=1
+	;;
+    esac
+done
+
+shift $((OPTIND-1))
+
+[ "$1" = "--" ] && shift
+
+echo "verbose=$verbose, camera=$camera, dual=$dual, spidev=$spidev, usb_acm=$usb_acm Leftovers: $@"
+
+
+if [ $camera = 1 ]
+then
+	# AiStarVisionCamera, edit the dtsi file to enable the camera
+	sudo ./dt-update/scripts/db410c/enable-ov5645.sh
+	if [ $dual = 1 ]
+	then
+		#enable the second camera
+		echo both cameras enabled.
+	fi
+	cd ..
+fi
+
+if [ $camera = 2 ]
+then
+	#D3 Engineering cameras
+	sudo ./dt-update/scripts/db410c/enable-d3-mezzanine.sh
+fi
+
+if [ $spidev = 1 ]
+then
+	# support for spidev user mode access to SPI devices
+	sudo ./dt-update/scripts/db410c/enable-spidev.sh
+fi
+
+# End of file

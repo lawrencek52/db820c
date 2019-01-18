@@ -1,0 +1,13 @@
+#!/bin/bash
+echo Installing basic utilities and python
+#sudo apt-get install -y man-db manpages manpages-dev
+sudo apt-get install -y autoconf automake libtool
+sudo apt-get install -y libncurses5-dev
+sudo apt-get install -y libfdt-dev
+sudo apt-get install -y device-tree-compiler stress
+sudo apt-get install -y libpython-dev libpython3-dev tofrodos
+#sudo apt-get install -y arduino-mk arduino
+sudo apt-get install -y git build-essential
+sudo apt-get install -y swig3.0 python-dev nodejs-dev cmake pkg-config
+sudo apt-get install -y libpcre3-dev
+sudo apt-get install -y v4l-utils abootimg

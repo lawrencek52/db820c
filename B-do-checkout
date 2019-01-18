@@ -1,0 +1,13 @@
+cd kernel
+#time git checkout -b build-97 2e4646fcf227f8023e535ddb18d3f3185665d8dd
+#time git checkout -b build-109 634ba131f4442045f1e38246a899615c219730ee
+#time git checkout -b build-202 0ea6924010269ba065848b2e450673e96bceffd9
+#time git checkout -b build-227 a6b64c721f5fed87d6f770ca2eb9ca622d1ce37c
+#time git checkout -b kernel-17.04 debian-qcom-dragonboard410c-17.04
+#time git checkout -b build-236 7a1690cbc7633f49cdb976687d32d5d2affbe14f
+#time git checkout -b build-240 180b1b7c70a3c567b72421dd9ac1b465527bdf65
+#time git checkout -b build-250 529c1db225629896d51b64a481b3760fd81a663a
+#time git checkout -b kernel-17.06.1 debian-qcom-dragonboard410c-17.06.1
+#time git checkout -b kernel-17.09 debian-qcom-dragonboard410c-17.09
+
+time git checkout -b build-491 0407ad53548e

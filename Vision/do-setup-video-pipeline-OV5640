@@ -1,0 +1,15 @@
+#echo 1920x1080 images no hardware scaler /dev/video0
+#sudo media-ctl -d /dev/media1 -l '"msm_csiphy0":1->"msm_csid0":0[1],"msm_csid0":1->"msm_ispif0":0[1],"msm_ispif0":1->"msm_vfe0_rdi0":0[1]'
+#sudo media-ctl -d /dev/media1 -V '"ov5640 1-0078":0[fmt:UYVY8_2X8/1920x1080 field:none],"msm_csiphy0":0[fmt:UYVY8_2X8/1920x1080 field:none],"msm_csid0":0[fmt:UYVY8_2X8/1920x1080 field:none],"msm_ispif0":0[fmt:UYVY8_2X8/1920x1080 field:none],"msm_vfe0_rdi0":0[fmt:UYVY8_2X8/1920x1080 field:none]'
+
+# echo 240x135 images with hardware scaler, /dev/video3
+# sudo media-ctl -d /dev/media1 -l '"msm_csiphy0":1->"msm_csid0":0[1],"msm_csid0":1->"msm_ispif0":0[1],"msm_ispif0":1->"msm_vfe0_pix":0[1]'
+# sudo media-ctl -d /dev/media1 -V '"ov5640 1-0078":0[fmt:UYVY8_2X8/1920x1080 field:none],"msm_csiphy0":0[fmt:UYVY8_2X8/1920x1080 field:none],"msm_csid0":0[fmt:UYVY8_2X8/1920x1080 field:none],"msm_ispif0":0[fmt:UYVY8_2X8/1920x1080 field:none],"msm_vfe0_pix":0[fmt:UYVY8_2X8/1920x1080 field:none compose:(0,0)/240x135],"msm_vfe0_pix":1[fmt:UYVY8_2X8/240x135 field:none]'
+
+#echo 480x270 images with hardware scaler, /dev/video3
+#sudo media-ctl -d /dev/media1 -l '"msm_csiphy0":1->"msm_csid0":0[1],"msm_csid0":1->"msm_ispif0":0[1],"msm_ispif0":1->"msm_vfe0_pix":0[1]'
+#sudo media-ctl -d /dev/media1 -V '"ov5640 1-0078":0[fmt:UYVY8_2X8/1920x1080 field:none],"msm_csiphy0":0[fmt:UYVY8_2X8/1920x1080 field:none],"msm_csid0":0[fmt:UYVY8_2X8/1920x1080 field:none],"msm_ispif0":0[fmt:UYVY8_2X8/1920x1080 field:none],"msm_vfe0_pix":0[fmt:UYVY8_2X8/1920x1080 field:none compose:(0,0)/480x270],"msm_vfe0_pix":1[fmt:UYVY8_2X8/480x270 field:none]'
+
+echo 960x540 images with hardware scaler, /dev/video3
+sudo media-ctl -d /dev/media1 -l '"msm_csiphy0":1->"msm_csid0":0[1],"msm_csid0":1->"msm_ispif0":0[1],"msm_ispif0":1->"msm_vfe0_pix":0[1]'
+sudo media-ctl -d /dev/media1 -V '"ov5640 1-0078":0[fmt:UYVY8_2X8/1920x1080 field:none],"msm_csiphy0":0[fmt:UYVY8_2X8/1920x1080 field:none],"msm_csid0":0[fmt:UYVY8_2X8/1920x1080 field:none],"msm_ispif0":0[fmt:UYVY8_2X8/1920x1080 field:none],"msm_vfe0_pix":0[fmt:UYVY8_2X8/1920x1080 field:none compose:(0,0)/960x540],"msm_vfe0_pix":1[fmt:UYVY8_2X8/960x540 field:none]'

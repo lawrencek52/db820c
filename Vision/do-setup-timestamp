@@ -1,0 +1,2 @@
+gst-launch-1.0 -e v4l2src device=/dev/video3 !  video/x-raw,format=NV12,width=1280,height=960,framerate=30/1 !  clockoverlay ! v4l2h264enc extra-controls="controls,h264_profile=4,video_bitrate=2000000;" !  h264parse ! mp4mux ! filesink location=video.mp4
+

@@ -1,0 +1,63 @@
+#!/bin/bash
+echo "script to create a swapfile, select the type of swapfile you want"
+echo "    -Z - zram swapfile"
+echo "    -E - 1.5GB swapfile in the onboard eMMC memory"
+echo "    -S - Swapfile on the SDCard (assumes partition /dev/mmcblk1p1 is already formated as a swap file)"
+
+# A POSIX variable
+OPTIND=1         # Reset in case getopts has been used previously in the shell.
+
+# Initialize our own variables:
+zram=0
+emmc=0
+sdcard=0
+
+while getopts "v:ZES" opt; do
+    case "$opt" in
+    Z)  zram=1
+        ;;
+    E)  emmc=1
+        ;;
+    S)  sdcard=1
+        ;;
+    esac
+done
+
+shift $((OPTIND-1))
+
+[ "$1" = "--" ] && shift
+
+echo "emmc=$emmc, sdcard=$sdcard, zram=$zram, Leftovers: $@"
+
+if [ $emmc = 1 ]; then
+	echo "Creating 1.5GB swapfile on eMMC"
+	sudo dd if=/dev/zero of=/swapfile count=1500 bs=1M status=progress
+	sudo chmod 600 /swapfile
+	sudo mkswap /swapfile
+	sudo swapon /swapfile
+	sudo sed -i '$a /swapfile none swap sw 0 0\n' /etc/fstab
+fi
+
+if [ $zram = 1 ]; then
+	echo "Creating ZRam swapfile"
+	cat << 'EOF' >zram.sh
+#!/bin/bash
+modprobe zram num_devices=4
+totalmem=`free | grep -e "^Mem:" | awk '{printf $2}'`
+mem=$(( ($totalmem)* 1024 * 3))
+echo $mem >/sys/block/zram0/disksize
+mkswap /dev/zram0
+swapon -p 5 /dev/zram0
+EOF
+	sudo mv zram.sh /usr/bin/zram.sh
+	sudo chmod +x /usr/bin/zram.sh
+	sudo sed -i '$i /usr/bin/zram.sh &' /etc/rc.local
+	echo "reboot now to start zram."
+fi
+
+
+if [ $sdcard = 1 ]; then
+	echo "enabling swapping on /dev/mmcblk1p1"
+	sudo swapon /dev/mmcblk1p1
+	sudo sed -i '$a /dev/mmcblk1p1 none swap sw 0 0\n' /etc/fstab
+fi

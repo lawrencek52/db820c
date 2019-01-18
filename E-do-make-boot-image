@@ -1,0 +1,13 @@
+cd kernel
+#dtb needs to be appended to the compressed kernel
+cat arch/arm64/boot/Image.gz arch/arm64/boot/dts/qcom/apq8016-sbc.dtb >Image.gz+dtb
+# abootimage needs a ramdisk so we create a dummy.
+echo "not a ramdisk" >ramdisk.img
+
+abootimg --create boot-db410c.img \
+	-k Image.gz+dtb \
+	-r ramdisk.img \
+	-c pagesize=2048 \
+	-c kerneladdr=0x80008000 \
+	-c ramdiskaddr=0x81000000 \
+	-c cmdline="root=/dev/mmcblk0p10 rw rootwait console=tty0 console=ttyMSM0,115200n8"

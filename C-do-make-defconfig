@@ -1,0 +1,3 @@
+cd kernel
+make defconfig distro.config
+
