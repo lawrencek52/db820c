@@ -1,11 +1,15 @@
+#!/bin/bash
+
 cd kernel
 # install all of the modules
 K=$(make kernelversion | sed -e 's/\(.*\)\..*/\1.0/')-qcomlt-arm64
 echo $K
 sudo make INSTALL_MOD_STRIP=1 modules_install KERNELRELEASE=$K
 #and install the kernel to the right partition
-sudo dd if=boot-db410c.img of=/dev/mmcblk0p8
+if [ -f boot-db820c.img ]; then
+	sudo dd if=boot-db820c.img of=/dev/sde17
+fi
 
 echo New kernel installed, please reboot the system with:
-echo  sudo reboot now
+echo "    sudo reboot now"
 

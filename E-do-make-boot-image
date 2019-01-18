@@ -1,13 +1,23 @@
+#!/bin/bash
 cd kernel
-#dtb needs to be appended to the compressed kernel
-cat arch/arm64/boot/Image.gz arch/arm64/boot/dts/qcom/apq8016-sbc.dtb >Image.gz+dtb
-# abootimage needs a ramdisk so we create a dummy.
-echo "not a ramdisk" >ramdisk.img
 
-abootimg --create boot-db410c.img \
-	-k Image.gz+dtb \
-	-r ramdisk.img \
-	-c pagesize=2048 \
-	-c kerneladdr=0x80008000 \
-	-c ramdiskaddr=0x81000000 \
-	-c cmdline="root=/dev/mmcblk0p10 rw rootwait console=tty0 console=ttyMSM0,115200n8"
+#get the initrd.img if necessary
+if [ ! -f initrd.img ]; then
+	wget https://snapshots.linaro.org/96boards/dragonboard410c/linaro/debian/latest/initrd.img-4.14.0-qcomlt-arm64
+	mv initrd.img-4.14.0-qcomlt-arm64 initrd.img
+fi
+
+# get the skales tool if needed
+if [ ! -d skales ]; then
+	git clone git://codeaurora.org/quic/kernel/skales
+fi
+
+skales/dtbTool -o dt.img -s 4096 arch/arm64/boot/dts/qcom/
+export CMDLINE="root=/dev/disk/by-partlabel/rootfs rw rootwait console=tty0 console=ttyMSM0,115200n8"
+skales/mkbootimg --kernel kernel/arch/arm64/boot/Image \
+               --ramdisk initrd.img \
+               --output boot_db820c.img \
+               --dt dt.img \
+               --pagesize 4096 \
+               --base 0x80000000 \
+               --cmdline "${CMDLINE}";

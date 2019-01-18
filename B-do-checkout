@@ -1,3 +1,4 @@
+#!/bin/bash
 cd kernel
 #time git checkout -b build-97 2e4646fcf227f8023e535ddb18d3f3185665d8dd
 #time git checkout -b build-109 634ba131f4442045f1e38246a899615c219730ee
@@ -10,4 +11,4 @@ cd kernel
 #time git checkout -b kernel-17.06.1 debian-qcom-dragonboard410c-17.06.1
 #time git checkout -b kernel-17.09 debian-qcom-dragonboard410c-17.09
 
-time git checkout -b build-491 0407ad53548e
+#time git checkout -b build-297 0407ad53548e

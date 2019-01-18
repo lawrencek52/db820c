@@ -1,39 +1,19 @@
-This collection of scripts sets up a DragonBoard 410c and rebuilds the kernel.
+This collection of scripts sets up a DragonBoard 820c and rebuilds the kernel.
 The purpose of seting up the board and rebuilding the kernel is to allow you to make changes to the kernel and enable additional features such as digital mics, camera mezzanine boards, and SPI devices.
 
-These scripts have been tested against the snapshot #491 kernel (tested around January 9th, 2019). It should be noted that even if you are running against the same version, the infrastructure (all of the non-kernel parts of the Debian release) are constantly evolving, just doing a "sudo apt-get-update" will bring in newer versions of many packages. Some of the newer versions may break things in the scripts, so please don't expect these scripts to run flawlessly forever.
-
-To run the scripts you need to add a SDCard to the system, format the SDCard with an ext4 file system, then create a directory on the SDCard called 'workspace'.
-	# insert a SDCard (16GB or larger) into the slot on the Dragonboard
-	sudo gdisk /dev/mmcblk1
-		o - erase the partition table
-		n - create a new partition, accept all of the defaults to make the entire SDCard a ext4 partition.
-		w - write out the new partition table
-	sync
-	sudo reboot now # you need to reboot to get the SDCard properly recognized
-	sudo mkfs -t ext4 /dev/mmcblk1p1
-	cd /media/linaro/<long-name>
-	sudo mkdir workspace
-	sudo chown linaro.linaro workspace
-	cd
-
-
-Then symbolicly link the workspace on the SDCard to a directory called 'workspace' in the home directory.
-	ln -s /media/linaro/<big long string>/workspace workspace
-	cd workspace
+These scripts have been tested against the snapshot #297 kernel (tested around January 18th, 2019). It should be noted that even if you are running against the same version, the infrastructure (all of the non-kernel parts of the Debian release) are constantly evolving, just doing a "sudo apt-get-update" will bring in newer versions of many packages. Some of the newer versions may break things in the scripts, so please don't expect these scripts to run flawlessly forever.
 
 Connect to the internet either through WiFi, or by using a USB to Ethernet dongle. A USB to ethernet dongle is highly recommended to save a lot of time. Then determine your ip address.
 	ip addr
-Once you have an ip addr, you can remote log into the DragonBoard 410c from a laptop or PC with ssh. for example:
+Once you have an ip addr, you can remote log into the DragonBoard 820c from a laptop or PC with ssh. for example:
 	ssh linaro@192.168.86.24
 	password: linaro
 The following steps need to be run on the DragonBoard 410c, but you can control the steps either from the local console, or from a remote ssh session.
 
 Copy the scripts from github into the workspace:
-	git clone https://github.com/lawrencek52/FirstRobotics.git	
-	cd FirstRobotics
+	git clone https://github.com/lawrencek52/820c.git	
+	cd 820c
 	git checkout master
-	cd Ball_tracking
 
 Next run the scripts starting with a number, starting at 0 and working up, you need to run the 0 to 2 scripts to setup the system. The 3, 4 and 5 scripts are only needed if you want to run the cameras on the Camera Mezzanine boards. The 3,4,5 scripts take about 4 hours to run, they do a lot of stuff.
 	./0-create-swapfile
@@ -42,6 +22,7 @@ Next run the scripts starting with a number, starting at 0 and working up, you n
 	./3-install-dlib.sh
 	./4-install-gstreamer.sh
 	./5-install-opencv.sh
+some of the scripts take parameters so you can do portions of their setup work.
 
 It is no longer necessary to rebuild the operating system to turn on the camera module. The G-enable-features script will do it all for you. For example, to enable the D3 camera module, simply run the command:
 	G-enable-features -D
@@ -57,6 +38,6 @@ If you need to rebuild and install the operating system kernel. Run the A to F s
 
 If you have a camera attached, and you have enabled camera support, then you can test the camera with the scripts in the Vision directory.
 	cd Vision
-	./do-setup-video-OV5640	# or one of the similar scripts depending on your setup
+	./do-setup-video-OV5645	# or one of the similar scripts depending on your setup
 	python3 ball-tracking.py
 

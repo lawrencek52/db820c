@@ -1,5 +1,7 @@
+#!/bin/bash
+
 cd kernel
 K=$(make kernelversion | sed -e 's/\(.*\)\..*/\1.0/')-qcomlt-arm64
 echo  KERNELRELEASE=$K
-time make -j4 Image.gz dtbs modules KERNELRELEASE=$K
+time make -j4 Image dtbs modules KERNELRELEASE=$K
 

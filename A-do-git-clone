@@ -1,2 +1,3 @@
-time git clone -n http://git.linaro.org/landing-teams/working/qualcomm/kernel.git
+#!/bin/bash
+time git clone -b integration-linux-qcomlt http://git.linaro.org/landing-teams/working/qualcomm/kernel.git
 
