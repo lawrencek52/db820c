@@ -3,6 +3,7 @@ echo "script to create install gstreamer"
 echo "    -A - apt-get required packages for gstreamer, only needs to be done once"
 echo "    -D - Download and build gstreamer, only necessary if not already on your SDCard"
 echo "    -I - Install gstreamer into the system area of the eMMC"
+echo "this takes about 30 minutes to run on db820c"
 
 # A POSIX variable
 OPTIND=1         # Reset in case getopts has been used previously in the shell.

@@ -80,17 +80,15 @@ if [ $apt = 1 ]; then
 	sudo apt-get install -y freeglut3-dev libglew-dev libglm-dev
 	sudo apt-get install -y libvtk7-qt-dev python3-vtk7 mesa-common-dev
 
-	# now install python libraries
+	# now install python3 libraries
 	sudo apt -y install python3-scipy python3-matplotlib python3-skimage python3-ipython
 
 	# Optional dependencies
 	sudo apt -y install libprotobuf-dev protobuf-compiler
 	sudo apt -y install libgoogle-glog-dev libgflags-dev
 	sudo apt -y install libgphoto2-dev libeigen3-dev libhdf5-dev doxygen
-	sudo apt -y install python3-dev python3-pip python3-dev
-	sudo apt -y install python3-tk python3-numpy
-	sudo apt -y install python3-testresources
-	sudo apt -y install python3-venv
+	sudo apt -y install python3-dev python3-pip python3-tk python3-numpy
+	sudo apt -y install python3-testresources python3-venv
 fi
 
 
@@ -141,8 +139,7 @@ if [ $install = 1 ]; then
 		sudo make install
 		cd "$cwd"
 	fi
-	# now install python libraries
-#	time sudo pip3 --cache-dir /usr/linaro/workspace/db820c/pip install wheel scipy matplotlib scikit-image ipython
+	# now install python3 libraries
 	cd opencv/build
 	echo Installing openCV
 	make -j4

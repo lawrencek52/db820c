@@ -28,7 +28,7 @@ if [ $bash = 1 ]; then
 	sudo sed -i '$a export PATH=~/bin:$PATH' ~/.bashrc
 	sudo sed -i '$a export JAVA_TOOL_OPTIONS="-Dgnu.io.rxtx.SerialPorts=/dev/tty96B0"' ~/.bashrc
 	sudo sed -i '$a export _JAVA_OPTIONS="-Djava.library.path=/home/linaro/.minecraft/natives/"' ~/.bashrc
-	sudo sed -i '$a export PYTHONPATH=/usr/local/lib/python3.7/dist-packages:/usr/local/lib/python2.7/site-packages:/usr/local/python/cv2/python-3.7' ~/.bashrc
+	sudo sed -i '$a export PYTHONPATH=/usr/local/lib/python3.7/dist-packages:/usr/local/python/cv2/python-3.7' ~/.bashrc
 
 #	sudo sed -i '$a xset s off\n' ~/.bashrc
 
