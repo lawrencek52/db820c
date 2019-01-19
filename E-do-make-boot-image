@@ -16,7 +16,7 @@ skales/dtbTool -o dt.img -s 4096 arch/arm64/boot/dts/qcom/
 export CMDLINE="root=/dev/disk/by-partlabel/rootfs rw rootwait console=tty0 console=ttyMSM0,115200n8"
 skales/mkbootimg --kernel arch/arm64/boot/Image \
                --ramdisk initrd.img \
-               --output boot_db820c.img \
+               --output boot-db820c.img \
                --dt dt.img \
                --pagesize 4096 \
                --base 0x80000000 \

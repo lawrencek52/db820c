@@ -7,7 +7,8 @@ echo $K
 sudo make INSTALL_MOD_STRIP=1 modules_install KERNELRELEASE=$K
 #and install the kernel to the right partition
 if [ -f boot-db820c.img ]; then
-	sudo dd if=boot-db820c.img of=/dev/sde17
+	echo Installing new boot on partition sde17
+	sudo dd if=boot-db820c.img of=/dev/sde17 status=progress
 fi
 
 echo New kernel installed, please reboot the system with:

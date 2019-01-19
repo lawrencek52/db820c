@@ -1,7 +1,10 @@
 #!/bin/bash
-
 cd kernel
+#figure out which kernel we are building.
 K=$(make kernelversion | sed -e 's/\(.*\)\..*/\1.0/')-qcomlt-arm64
 echo  KERNELRELEASE=$K
+
+#make the kernel, device tree, and the modules
 time make -j4 Image dtbs modules KERNELRELEASE=$K
+
 

@@ -6,7 +6,7 @@ echo "    -A - apt-get required packages for openCV, only needs to be done once"
 echo "    -D - Download openCV and prepare the Makefile, only necessary if not already on your SDCard"
 echo "    -B - Build openCV, only necessary if not already on your SDCard"
 echo "    -I - Install openCV into the system area of the eMMC"
-
+echo "The entire process takes just over 2 hours on db820c"
 # A POSIX variable
 OPTIND=1         # Reset in case getopts has been used previously in the shell.
 
@@ -81,7 +81,7 @@ if [ $apt = 1 ]; then
 	sudo apt-get install -y libvtk7-qt-dev python3-vtk7 mesa-common-dev
 
 	# now install python libraries
-	sudo apt install python3-scipy python3-matplotlib python3-skimage python3-ipython
+	sudo apt -y install python3-scipy python3-matplotlib python3-skimage python3-ipython
 
 	# Optional dependencies
 	sudo apt -y install libprotobuf-dev protobuf-compiler
@@ -131,7 +131,7 @@ if [ $build = 1 ]; then
 	cd "$cwd"
 	cd opencv/build
 	echo Building openCV
-	make -j3
+	make -j4
 	cd "$cwd"
 fi
 if [ $install = 1 ]; then
@@ -142,9 +142,18 @@ if [ $install = 1 ]; then
 		cd "$cwd"
 	fi
 	# now install python libraries
-#	time sudo pip3 --cache-dir /usr/linaro/workspace/FirstRobotics/pip install wheel scipy matplotlib scikit-image ipython
+#	time sudo pip3 --cache-dir /usr/linaro/workspace/db820c/pip install wheel scipy matplotlib scikit-image ipython
 	cd opencv/build
 	echo Installing openCV
-	make -j3
+	make -j4
 	sudo make install
+	# link the module so Python3.7 can find it.
+	if [ -f /usr/local/python/cv2/python-3.7/cv2.so ]; then
+		sudo rm /usr/local/python/cv2/python-3.7/cv2.so
+	fi
+	cd /usr/local/python/cv2/python-3.7
+	sudo ln cv2.cpython-37m-aarch64-linux-gnu.so cv2.so
+	cd "$cwd"
+	# and some other bits we need
+	time sudo pip3 --cache-dir /usr/linaro/workspace/FirstRobotics/pip install imutils
 fi
