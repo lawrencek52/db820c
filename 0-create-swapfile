@@ -3,6 +3,7 @@ echo "script to create a swapfile, select the type of swapfile you want"
 echo "    -Z - zram swapfile"
 echo "    -E - 1.5GB swapfile in the onboard eMMC memory"
 echo "    -S - Swapfile on the SDCard (assumes partition /dev/mmcblk1p1 is already formated as a swap file)"
+echo "Note: the db820c has enough memory, a cache is not really necessary, skip this step if you want"
 
 # A POSIX variable
 OPTIND=1         # Reset in case getopts has been used previously in the shell.

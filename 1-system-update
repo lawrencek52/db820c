@@ -37,6 +37,8 @@ fi
 echo "Updating system to latest versions (apt-get update, upgrade, dist-upgrade)"
 sudo apt-get update
 sudo apt-get upgrade -y
-sudo apt-get dist-upgrade -u -y
+# as of Jan 25th/2018 doing this next step puts the board in an unbootable state.
+# Skip this step until the problem gets fixed
+#sudo apt-get dist-upgrade -u -y
 sudo apt-get clean
 sudo apt-get autoremove -y

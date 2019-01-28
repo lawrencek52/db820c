@@ -37,7 +37,7 @@ if [ $install = 1 ]; then
 	if [ ! -d pip ]; then
 		mkdir pip
 	fi
-	#pip by default builds in ~/.cache, we want to build in ./dlib
+	#pip by default builds in ~/.cache
 	echo building dlib this takes about 45 minutes
-	time sudo pip3 --cache-dir /usr/linaro/workspace/db820c/pip install dlib
+	time sudo pip3 install dlib
 fi

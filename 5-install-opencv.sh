@@ -152,5 +152,5 @@ if [ $install = 1 ]; then
 	sudo ln cv2.cpython-37m-aarch64-linux-gnu.so cv2.so
 	cd "$cwd"
 	# and some other bits we need
-	time sudo pip3 --cache-dir /usr/linaro/workspace/FirstRobotics/pip install imutils
+	time sudo pip3 install imutils
 fi
